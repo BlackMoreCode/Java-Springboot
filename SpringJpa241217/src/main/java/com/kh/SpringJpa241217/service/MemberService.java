@@ -5,14 +5,12 @@ import com.kh.SpringJpa241217.dto.MemberResDto;
 import com.kh.SpringJpa241217.entity.Member;
 import com.kh.SpringJpa241217.repository.MemberRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j // 로그 정보를 출력하기 위함
 @Service // 스프링 컨테이너에 빈(객체)를 등록

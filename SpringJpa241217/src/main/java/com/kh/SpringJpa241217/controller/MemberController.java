@@ -61,7 +61,7 @@ public class MemberController {
     }
 
 
-    // 멤버 삭제
+    // 멤버 삭제; param 쓰니까 http://localhost:8111/member/delete?email=blackmoreinvoker@gmail.com  이런식으로
     @PostMapping("/delete")
     public ResponseEntity<Boolean> deleteMember(@RequestParam  String email) {
         log.info("해당 이메일로 멤버 삭제 시도 : {}", email);
