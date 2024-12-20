@@ -34,7 +34,7 @@ public class Board {
     public void prePersist() {
         regDate = LocalDateTime.now();
     }
-    @ManyToOne // 다 대 일 관계; 게시글 (다) 대 회원(일)
+    @ManyToOne // 다 대 일 관계; 게시글 (다) 대 회원(일). 회원에 관한 참조 정보. 이미 만들어져있어야한다.
     @JoinColumn(name = "member_id")
     private Member member;
 
