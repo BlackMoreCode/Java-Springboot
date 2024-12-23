@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //게시글에 관한 엔티티; 회원과 게시글에 관한 연관 관계 (맵핑)
 @Entity
@@ -37,5 +39,9 @@ public class Board {
     @ManyToOne // 다 대 일 관계; 게시글 (다) 대 회원(일). 회원에 관한 참조 정보. 이미 만들어져있어야한다.
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "board") // 주인이 아님을 의미; 즉, 객체를 참조만 함.
+    private List<Comment> comments = new ArrayList<>(); // DB로 만들어지지 않는다. 참조만 한다.
+
 
 }

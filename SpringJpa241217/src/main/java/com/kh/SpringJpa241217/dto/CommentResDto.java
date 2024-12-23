@@ -3,19 +3,17 @@ package com.kh.SpringJpa241217.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
-public class BoardResDto {
-    private Long boardId;
-    private String title;
-    private String content;
-    private String imgPath;
-    private LocalDateTime regDate;
-    private String email;
+@ToString
 
-    // 댓글 목록 추가
-    private List<CommentResDto> comments;
+public class CommentResDto { // 응답 받을때 = Res(ponse)
+    private String email;
+    private Long boardId;
+    private Long commentId;
+    private String content;
+    private LocalDateTime regDate;
 }

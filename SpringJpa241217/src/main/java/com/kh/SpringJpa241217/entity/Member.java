@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity // 해당 클래스가 entity임을 나타냄; 일반 클래스가 아니고 DB를 만드는 클래스
 @Table(name="member") // 테이블 이름 지정, 테이블 이름은 소문자, 카멜 표기법은 스네이크 표기법으로 변경됨.
@@ -35,4 +37,9 @@ public class Member {
     protected void onCreate() {
         this.regDate = LocalDateTime.now(); // 현재 시간을 등록 시간으로 넣어준다.
     }
+
+    // 게시글 목록에 대한 OneToMany
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards = new ArrayList<>();
+
 }

@@ -2,7 +2,9 @@ package com.kh.SpringJpa241217.service;
 
 import com.kh.SpringJpa241217.dto.BoardReqDto;
 import com.kh.SpringJpa241217.dto.BoardResDto;
+import com.kh.SpringJpa241217.dto.CommentResDto;
 import com.kh.SpringJpa241217.entity.Board;
+import com.kh.SpringJpa241217.entity.Comment;
 import com.kh.SpringJpa241217.entity.Member;
 import com.kh.SpringJpa241217.repository.BoardRepository;
 import com.kh.SpringJpa241217.repository.MemberRepository;
@@ -69,7 +71,7 @@ public class BoardService {
         for (Board board : boards) {
             // boardResDto라는 빈 객체를 만들어서 하나하나 넣어주기
             // convertEntityToDto를 통해서 BoardResDto를 반환 받아서 List에 주기
-            boardResDtoList.add(convertEntityToDto(board));
+            boardResDtoList.add(convertEntityToDtoWithoutComments(board));
         }
         return boardResDtoList;
     }
@@ -105,7 +107,7 @@ public class BoardService {
         for (Board board : boards) {
             // boardResDto라는 빈 객체를 만들어서 하나하나 넣어주기
             // convertEntityToDto를 통해서 BoardResDto를 반환 받아서 List에 주기
-            boardResDtoList.add(convertEntityToDto(board));
+            boardResDtoList.add(convertEntityToDtoWithoutComments(board));
         }
         return boardResDtoList;
 
@@ -167,17 +169,63 @@ public class BoardService {
         boardRepository.updateContentById(id, newContent);
     }
 
+    // 댓글 목록 조회
+    public List<CommentResDto> commentList(Long boardId) {
+        try {
+            Board board = boardRepository.findById(boardId)
+                    .orElseThrow(()-> new RuntimeException("해당 게시글이 없습니다."));
 
+            List<CommentResDto> commentResDtoList = new ArrayList<>();
+            for(Comment comment : board.getComments()) {
+               CommentResDto commentResDto = new CommentResDto();
+               commentResDto.setEmail(comment.getMember().getEmail());
+               commentResDto.setBoardId(comment.getBoard().getId());
+               commentResDto.setCommentId(comment.getCommentId());
+               commentResDto.setRegDate(comment.getRegDate());
+               commentResDtoList.add(commentResDto);
+            }
+            return commentResDtoList;
+        } catch (Exception e) {
+            log.error("게시글에 대한 댓글 조회 실패 : {}", e.getMessage());
+            return null;
+        }
+    }
 
     private BoardResDto convertEntityToDto(Board board) {
         BoardResDto boardResDto = new BoardResDto();
         boardResDto.setBoardId(board.getId());
         boardResDto.setTitle(board.getTitle());
-        boardResDto.setContent(board.getTitle());
+        boardResDto.setContent(board.getContent());
         boardResDto.setImgPath(board.getImgPath());
         boardResDto.setEmail(board.getMember().getEmail());
         boardResDto.setRegDate(board.getRegDate());
+
+        List<CommentResDto> commentResDtoList = new ArrayList<>();
+        for(Comment comment : board.getComments()) {
+            CommentResDto commentResDto = new CommentResDto();
+            commentResDto.setBoardId(comment.getBoard().getId());
+            commentResDto.setCommentId(comment.getCommentId());
+            commentResDto.setEmail(comment.getMember().getEmail());
+            commentResDto.setContent(comment.getContent());
+            commentResDto.setRegDate(comment.getRegDate());
+            commentResDtoList.add(commentResDto);
+        }
+        boardResDto.setComments(commentResDtoList);
         return boardResDto;
     }
+
+    // 댓글 제외 Dto
+    private BoardResDto convertEntityToDtoWithoutComments(Board board) {
+        BoardResDto boardResDto = new BoardResDto();
+        boardResDto.setBoardId(board.getId());
+        boardResDto.setTitle(board.getTitle());
+        boardResDto.setContent(board.getContent());
+        boardResDto.setImgPath(board.getImgPath());
+        boardResDto.setEmail(board.getMember().getEmail());
+        boardResDto.setRegDate(board.getRegDate());
+        boardResDto.setComments(new ArrayList<>());
+        return boardResDto;
+    }
+
 
 }

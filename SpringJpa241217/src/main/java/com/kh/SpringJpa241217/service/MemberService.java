@@ -1,7 +1,9 @@
 package com.kh.SpringJpa241217.service;
 
+import com.kh.SpringJpa241217.dto.BoardResDto;
 import com.kh.SpringJpa241217.dto.MemberReqDto;
 import com.kh.SpringJpa241217.dto.MemberResDto;
+import com.kh.SpringJpa241217.entity.Board;
 import com.kh.SpringJpa241217.entity.Member;
 import com.kh.SpringJpa241217.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -96,5 +98,26 @@ public class MemberService {
             log.error("회원 삭제에 실패하였습니다 : {}", e.getMessage());
             return false;
         }
+    }
+
+    private MemberResDto convertEntityToDtoWithBoard(Member member) {
+        MemberResDto memberResDto = new MemberResDto();
+        memberResDto.setEmail(member.getEmail());
+        memberResDto.setName(member.getName());
+        memberResDto.setRegDate(member.getRegDate());
+        memberResDto.setImagePath(member.getImgPath());
+
+        List<BoardResDto> boardResDtoList = new ArrayList<>();
+        for (Board board : member.getBoards()) {
+            BoardResDto boardResDto = new BoardResDto();
+            boardResDto.setBoardId(board.getId());
+            boardResDto.setTitle(board.getTitle());
+            boardResDto.setImgPath(board.getImgPath());
+            boardResDto.setRegDate(board.getRegDate());
+            boardResDtoList.add(boardResDto);
+        }
+        memberResDto.setBoards(boardResDtoList);
+        return memberResDto;
+
     }
 }

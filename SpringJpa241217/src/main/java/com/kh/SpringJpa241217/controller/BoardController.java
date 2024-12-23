@@ -43,7 +43,7 @@ public class BoardController {
 
     // 게시글 등록
     @PostMapping("/register")
-    public ResponseEntity<Boolean> register(@RequestParam BoardReqDto boardReqDto) {
+    public ResponseEntity<Boolean> register(@RequestBody BoardReqDto boardReqDto) {
         boolean isSuccess = boardService.saveBoard(boardReqDto);
         return ResponseEntity.ok(isSuccess);
     }
