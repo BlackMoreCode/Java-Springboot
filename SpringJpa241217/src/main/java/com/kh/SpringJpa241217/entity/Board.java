@@ -1,6 +1,5 @@
 package com.kh.SpringJpa241217.entity;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,9 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//게시글에 관한 엔티티; 회원과 게시글에 관한 연관 관계 (맵핑)
+// 게시글에 관한 Entity
 @Entity
-@Table(name="board")
+@Table(name = "board")
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class Board {
@@ -23,25 +22,39 @@ public class Board {
     private Long id;
 
     @Column(nullable = false)
-    private String title;   // 게시글 제목
-
+    private String title;   // 글 제목
     @Lob
     @Column(length = 1000)
-    private String content; // 게시글 내용
+    private String content; // 글 내용
 
-    private String imgPath; // 게시글 이미지 경로
-
-    private LocalDateTime regDate;  // 게시글 등록 일자
+    private String imgPath;
+    private LocalDateTime regDate;
     @PrePersist
     public void prePersist() {
         regDate = LocalDateTime.now();
     }
-    @ManyToOne // 다 대 일 관계; 게시글 (다) 대 회원(일). 회원에 관한 참조 정보. 이미 만들어져있어야한다.
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "board") // 주인이 아님을 의미; 즉, 객체를 참조만 함.
-    private List<Comment> comments = new ArrayList<>(); // DB로 만들어지지 않는다. 참조만 한다.
+    // 12-24
+    // 영속성전이: 부모 엔티티의 상태 변화가 자식 엔티티에도 전이 되는 것(cascade)
+    // 고아 객체 제거 : 부모와의 연관 관계가 끊어진 자식엔티티를 자동으로 데이터베이스에서 제거하는 것(orphanRemoval)
+    // 부모가 관리하는 List에서 해당 객체를 삭제하는 경우 실제 DB에서 삭제 됨
+    @OneToMany(mappedBy = "board",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    // 12-24
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setBoard(this);
+    }
+
+    // 12-24
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setBoard(null);
+    }
 
 
 }
