@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin(origins = "https://localhost:3000") // 이번까지만. 추후엔 뺀다
+@CrossOrigin(origins = "http://localhost:3000") // 이번까지만. 추후엔 뺀다
 @RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor

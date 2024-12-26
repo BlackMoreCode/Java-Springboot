@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin(origins = "https://localhost:3000") // 이번까지만. 추후엔 뺀다
+@CrossOrigin(origins = "http://localhost:3000") // 이번까지만. 추후엔 뺀다
 @RestController
 @RequestMapping("/member") // 진입 경로
 @RequiredArgsConstructor
@@ -36,21 +36,30 @@ public class MemberController {
     }
 
 
-    // 특정 멤버 정보 조회
+    // 특정 멤버 정보 조회 내가 했던 방식;
     // 요구하는 패러미터 = email --> 이 경우 http://localhost:8111/member/memberDetail?email=testaccount@gmail.com  이런식으로.
-    @GetMapping("/detail")
-    public ResponseEntity<MemberResDto> getMemberDetail(@RequestParam String email) {
-        try {
-            log.info("Fetching details for member with email: {}", email);
-            // memberResDto를 호출하는 이유는 service에서 Member entity를 meemberResDto로 변환쳤기 때문
-            // 이는 또한 비밀번호 등등을 숨겨서 전송해야할 때 쓰인다.
-            MemberResDto memberResDto = memberService.getMemberDetail(email);
-            return ResponseEntity.ok(memberResDto);
-        } catch (RuntimeException e) {
-            log.error("멤버 정보 불러오기 실패 :  {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
+//    @GetMapping("/detail")
+//    public ResponseEntity<MemberResDto> getMemberDetail(@RequestParam String email) {
+//        try {
+//            log.info("Fetching details for member with email: {}", email);
+//            // memberResDto를 호출하는 이유는 service에서 Member entity를 meemberResDto로 변환쳤기 때문
+//            // 이는 또한 비밀번호 등등을 숨겨서 전송해야할 때 쓰인다.
+//            MemberResDto memberResDto = memberService.getMemberDetail(email);
+//            return ResponseEntity.ok(memberResDto);
+//        } catch (RuntimeException e) {
+//            log.error("멤버 정보 불러오기 실패 :  {}", e.getMessage());
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+
+    // 회원 상세 조회
+    @GetMapping("/{email}")
+    public ResponseEntity<MemberResDto> memberDetail(@PathVariable String email) {
+        MemberResDto memberResDto = memberService.getMemberDetail(email);
+        return ResponseEntity.ok(memberResDto);
     }
+
+
 
     // 회원 정보 수정 (PutMapping vs PostMapping 찾아보기)
     @PostMapping("/modify")
@@ -61,13 +70,14 @@ public class MemberController {
     }
 
 
-    // 멤버 삭제; param 쓰니까 http://localhost:8111/member/delete?email=blackmoreinvoker@gmail.com  이런식으로
-    @PostMapping("/delete")
-    public ResponseEntity<Boolean> deleteMember(@RequestParam  String email) {
-        log.info("해당 이메일로 멤버 삭제 시도 : {}", email);
-        boolean isSuccess = memberService.deleteMember(email);
-        return ResponseEntity.ok(isSuccess);
-    }
+    // 멤버 삭제; 내가 시도한 버전.
+    // param 쓰니까 http://localhost:8111/member/delete?email=blackmoreinvoker@gmail.com  이런식으로
+//    @PostMapping("/delete")
+//    public ResponseEntity<Boolean> deleteMember(@RequestParam  String email) {
+//        log.info("해당 이메일로 멤버 삭제 시도 : {}", email);
+//        boolean isSuccess = memberService.deleteMember(email);
+//        return ResponseEntity.ok(isSuccess);
+//    }
 
     // 멤버 삭제 강사님 버전
     @DeleteMapping("/{email}")
