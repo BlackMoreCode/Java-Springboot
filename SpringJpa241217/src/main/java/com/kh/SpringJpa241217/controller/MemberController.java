@@ -28,11 +28,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 모든 멤버 조회
+    // 회원 전체 조회
     @GetMapping("/list")
-    public ResponseEntity<List<MemberResDto>> getMemberDetail() {
-        List<MemberResDto> MemberResDto = memberService.getMemberList();
-        return ResponseEntity.ok(MemberResDto);
+    public ResponseEntity<List<MemberResDto>> memberList() {
+        List<MemberResDto> list = memberService.getMemberList();
+        return ResponseEntity.ok(list);
     }
 
 

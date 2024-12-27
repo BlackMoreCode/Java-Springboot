@@ -2,6 +2,7 @@ package com.kh.SpringJpa241217.entity;
 
 
 
+import com.kh.SpringJpa241217.constant.Authority;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Member {
 
     @Column(nullable = false, length = 50) //email은 null이 오면 안된다라는 제약 조건.
     private String email;
-    @Column(nullable = false, length = 50) //  Length 부분은 기본적으로 255지만 명시적으로 제약을 걸 수도 있다
+    @Column(nullable = false) //  Length 부분은 기본적으로 255지만 명시적으로 제약을 걸 수도 있다
     private String pwd;
 
     @Column(length = 50)
@@ -32,14 +33,27 @@ public class Member {
     private LocalDateTime regDate;
     @Column(name="image_path")
     private String imgPath;
-    @PrePersist // JPA의 콜백 메서드로 엔티티가 저장되기 전에 실행; DB 데이터가 삽입되기 전에 자동 설정
-
-    protected void onCreate() {
-        this.regDate = LocalDateTime.now(); // 현재 시간을 등록 시간으로 넣어준다.
-    }
+//    @PrePersist // JPA의 콜백 메서드로 엔티티가 저장되기 전에 실행; DB 데이터가 삽입되기 전에 자동 설정
+//
+//    protected void onCreate() {
+//        this.regDate = LocalDateTime.now(); // 현재 시간을 등록 시간으로 넣어준다.
+//    }
 
     // 게시글 목록에 대한 OneToMany
     @OneToMany(mappedBy = "member")
     private List<Board> boards = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    @Builder
+    public Member(String email, String name, String pwd, String img, Authority authority) {
+        this.email = email;
+        this.pwd = pwd;
+        this.name = name;
+        this.imgPath = img;
+        this.authority = authority;
+        this.regDate = LocalDateTime.now();
+    }
 
 }

@@ -38,14 +38,12 @@ public class MemberService {
     //회원 전체 조회 수업중에 보여진 방식. 새로운 메모리를 만듬.
     // 리스트를 여기서 만든다.
     public List<MemberResDto> getMemberList() {
-        // DB로 부터 모든 회원 정보를 조회; 그 정보들을 Member Entity 객체로 읽어 옴
         List<Member> members = memberRepository.findAll();
-        // 프론트엔드에 정보를 전달하기 위해 DTO List를 생성
-        List<MemberResDto> memberResDtoList = new ArrayList<>();
-        for (Member member : members) { // Member entity로 구성된 리스트를 순회
-            memberResDtoList.add(convertEntityToDto(member));
+        List<MemberResDto> memberDtos = new ArrayList<>();
+        for(Member member : members) {
+            memberDtos.add(MemberResDto.of(member));
         }
-        return memberResDtoList;
+        return memberDtos;
     }
 
     // Member Entity => MemberResDto 로 변환

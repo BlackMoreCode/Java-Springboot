@@ -1,10 +1,8 @@
 package com.kh.SpringJpa241217.dto;
 
 import com.kh.SpringJpa241217.entity.Board;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.kh.SpringJpa241217.entity.Member;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +11,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Builder
 
 
 // 응답을 받을 때는
@@ -25,4 +25,13 @@ public class MemberResDto {
 
     // 게시글 목록 추가
     private List<BoardResDto> boards;
+
+    public static MemberResDto of(Member member) {
+        return MemberResDto.builder()
+                .name(member.getName())
+                .email(member.getEmail())
+                .imagePath(member.getImgPath())
+                .regDate(member.getRegDate())
+                .build();
+    }
 }

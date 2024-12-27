@@ -2,6 +2,8 @@ package com.kh.SpringJpa241217.controller;
 
 import com.kh.SpringJpa241217.dto.LogInReqDto;
 import com.kh.SpringJpa241217.dto.MemberReqDto;
+import com.kh.SpringJpa241217.dto.MemberResDto;
+import com.kh.SpringJpa241217.dto.TokenDto;
 import com.kh.SpringJpa241217.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,15 +28,14 @@ public class AuthController {
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<Boolean> signUp(@RequestBody MemberReqDto memberReqDto) {
-        boolean isSuccess = authService.signUp(memberReqDto);
-        return ResponseEntity.ok(isSuccess);
+    public ResponseEntity<MemberResDto> signup(@RequestBody MemberReqDto memberReqDto) {
+        return ResponseEntity.ok(authService.signup(memberReqDto));
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody LogInReqDto logInReqDto) {
-        boolean isSuccess = authService.login(logInReqDto);
-        return ResponseEntity.ok(isSuccess);
+    public ResponseEntity<TokenDto> login(@RequestBody MemberReqDto memberReqDto) {
+        return ResponseEntity.ok(authService.login(memberReqDto));
     }
+
 }
