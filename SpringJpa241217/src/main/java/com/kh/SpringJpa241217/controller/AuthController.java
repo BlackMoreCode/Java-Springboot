@@ -32,7 +32,14 @@ public class AuthController {
     }
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberReqDto memberReqDto) {
-        return ResponseEntity.ok(authService.login(memberReqDto));
+    public ResponseEntity<TokenDto> login(@RequestBody LoginReqDto loginReqDto) {
+        return ResponseEntity.ok(authService.login(loginReqDto));
     }
+    // accessToken 재발급
+    @PostMapping
+    public ResponseEntity<String> refreshToken(@RequestBody String refreshToken) {
+        log.info("refresh Token : {}", refreshToken);
+        return ResponseEntity.ok(authService.createAccessToken(refreshToken));
+    }
+
 }

@@ -105,4 +105,9 @@ public class TokenProvider {
             return e.getClaims();
         }
     }
+
+    // access 토큰 재발급
+    public String generateAccessToken(Authentication authentication) {
+        return generateTokenDto(authentication).getAccessToken();
+    }
 }

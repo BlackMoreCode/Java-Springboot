@@ -30,7 +30,4 @@ public class MemberReqDto {
                 .authority(Authority.ROLE_USER)
                 .build();
     }
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, pwd);
-    }
 }

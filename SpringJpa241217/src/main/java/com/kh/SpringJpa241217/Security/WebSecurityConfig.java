@@ -46,19 +46,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .antMatchers("/favicon.ico","/manifest.json").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
-                .and()
-                .cors();
+                .apply(new JwtSecurityConfig(tokenProvider));
 
         return http.build();
-    }
-    @Override  // 메소드 오버라이딩, localhost:3000 번으로 들어오는 요청 허가
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("*")
-                .allowedHeaders("*")
-                .allowCredentials(true);
     }
 
 }

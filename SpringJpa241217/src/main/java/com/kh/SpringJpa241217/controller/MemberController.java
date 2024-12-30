@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// 4. MemberController : 회원 전체 조회, 개별 회원 조회, 회원 정보 수정, 회원 삭제
 @Slf4j
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {

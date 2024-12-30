@@ -44,9 +44,16 @@ public class AuthService {
     }
 
     // 로그인
-    public TokenDto login(MemberReqDto memberReqDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = memberReqDto.toAuthentication();
+    public TokenDto login(LoginReqDto loginReqDto) {
+        UsernamePasswordAuthenticationToken authenticationToken = loginReqDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
         return tokenProvider.generateTokenDto(authentication);
     }
+
+    // accessToken 재발급
+    public String createAccessToken(String refreshToken) {
+        Authentication authentication = tokenProvider.getAuthentication(refreshToken);
+        return tokenProvider.generateAccessToken(authentication);
+    }
+
 }
