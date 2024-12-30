@@ -1,4 +1,4 @@
-package com.kh.SpringJpa241217;
+package com.kh.springJpa241217;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

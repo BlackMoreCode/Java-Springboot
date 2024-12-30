@@ -1,19 +1,19 @@
-package com.kh.SpringJpa241217.controller;
+package com.kh.springJpa241217.controller;
 
-import com.kh.SpringJpa241217.dto.LogInReqDto;
-import com.kh.SpringJpa241217.dto.MemberReqDto;
-import com.kh.SpringJpa241217.dto.MemberResDto;
-import com.kh.SpringJpa241217.dto.TokenDto;
-import com.kh.SpringJpa241217.service.AuthService;
+import com.kh.springJpa241217.dto.LoginReqDto;
+import com.kh.springJpa241217.dto.MemberReqDto;
+import com.kh.springJpa241217.dto.MemberResDto;
+import com.kh.springJpa241217.dto.TokenDto;
+import com.kh.springJpa241217.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000") // 이번까지만. 추후엔 뺀다
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/auth") // 진입 경로
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 
 public class AuthController {
@@ -23,19 +23,16 @@ public class AuthController {
     @GetMapping("/exists/{email}")
     public ResponseEntity<Boolean> isMember(@PathVariable String email) {
         boolean isTrue = authService.isMember(email);
-        return ResponseEntity.ok(!isTrue); // 존재하면 가입되면 안되니까 !isTrue 처리
+        return ResponseEntity.ok(!isTrue);
     }
-
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<MemberResDto> signup(@RequestBody MemberReqDto memberReqDto) {
-        return ResponseEntity.ok(authService.signup(memberReqDto));
+    public ResponseEntity<MemberResDto> signUp(@RequestBody MemberReqDto memberReqDto) {
+        return ResponseEntity.ok(authService.signUp(memberReqDto));
     }
-
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody MemberReqDto memberReqDto) {
         return ResponseEntity.ok(authService.login(memberReqDto));
     }
-
 }

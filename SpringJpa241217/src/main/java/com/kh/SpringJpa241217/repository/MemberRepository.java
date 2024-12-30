@@ -1,18 +1,17 @@
-package com.kh.SpringJpa241217.repository;
+package com.kh.springJpa241217.repository;
 
-import com.kh.SpringJpa241217.entity.Member;
+import com.kh.springJpa241217.entity.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    // 기본적인 CRUD 기능은 이미 만들어져있다.
-    boolean existsByEmail(String email); // SELECT * FROM MEMBER WHERE email = "";
+    // 기본적인 CRUD는 이미 만들어져 있음
+    boolean existsByEmail(String email); // select * from member where email = "";
     Optional<Member> findByEmail(String email);
-    Optional<Member> findByPwd(String pwd); // findByPw 라고 써버리면 죽어버린다!! 카멜 표기도 정확히 지켜줘야한다!!
+    Optional<Member> findByPwd(String pwd);
     Optional<Member> findByEmailAndPwd(String email, String pwd);
 
     @EntityGraph(attributePaths = "boards")

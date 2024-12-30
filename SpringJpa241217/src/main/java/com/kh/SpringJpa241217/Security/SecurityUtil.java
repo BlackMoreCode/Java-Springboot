@@ -1,14 +1,13 @@
-package com.kh.SpringJpa241217.Security;
+package com.kh.springJpa241217.security;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Slf4j
+@NoArgsConstructor
 public class SecurityUtil {
-
-    private SecurityUtil() { }
-
     public static Long getCurrentMemberId() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

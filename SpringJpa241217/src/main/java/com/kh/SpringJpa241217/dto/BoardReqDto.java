@@ -1,4 +1,4 @@
-package com.kh.SpringJpa241217.dto;
+package com.kh.springJpa241217.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,5 +11,4 @@ public class BoardReqDto {
     private String content;
     private String imgPath;
     private String email;
-
 }

@@ -1,9 +1,8 @@
-package com.kh.SpringJpa241217.config;
+package com.kh.springJpa241217.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Service;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Service
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
@@ -30,7 +28,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kh.SpringJpa241217"))
+                .apis(RequestHandlerSelectors.basePackage("com.kh.springJpa241217"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Arrays.asList(apiKey()))
@@ -45,7 +43,6 @@ public class SwaggerConfiguration {
                 .version("1.0.0")
                 .build();
     }
-
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
     }

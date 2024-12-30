@@ -1,5 +1,4 @@
-package com.kh.SpringJpa241217.config;
-
+package com.kh.springJpa241217.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +15,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        log.info("소켓핸들러");
+        log.info("소켓 핸들러 생성~~~~~~");
         registry.addHandler(webSocketHandler, "ws/chat").setAllowedOrigins("*");
     }
 }

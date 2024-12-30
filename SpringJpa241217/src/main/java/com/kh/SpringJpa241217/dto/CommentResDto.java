@@ -1,4 +1,4 @@
-package com.kh.SpringJpa241217.dto;
+package com.kh.springJpa241217.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,10 +7,11 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 @ToString
-
-public class CommentResDto { // 응답 받을때 = Res(ponse)
+public class CommentResDto {
     private String email;
     private Long boardId;
     private Long commentId;

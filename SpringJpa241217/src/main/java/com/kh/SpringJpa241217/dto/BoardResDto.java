@@ -1,4 +1,4 @@
-package com.kh.SpringJpa241217.dto;
+package com.kh.springJpa241217.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class BoardResDto {
     private Long boardId;
     private String title;
